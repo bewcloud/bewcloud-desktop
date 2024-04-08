@@ -18,6 +18,9 @@ jobs:
           - os: ubuntu-latest
             arch: x86_64
             rust_target: x86_64-unknown-linux-gnu
+          - os: ubuntu-latest
+            arch: aarch64
+            rust_target: aarch64-unknown-linux-gnu
           - os: macos-latest
             arch: x86_64
             rust_target: x86_64-apple-darwin
@@ -48,7 +51,7 @@ jobs:
         if: matrix.config.os == 'ubuntu-latest'
         run: |
           sudo apt update
-          sudo apt install -y webkit2gtk-4.0
+          sudo apt-get install -y libwebkit2gtk-4.0-dev
       
       - name: Install dependencies
         run: |
@@ -57,17 +60,13 @@ jobs:
       
       - name: Build
         run: make build
-        env:
-          PL_SERVER_URL: ${{ secrets.PL_SERVER_URL }}
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
       
       - name: Archive AppImage
         uses: actions/upload-artifact@v4
         if: matrix.config.os == 'ubuntu-latest'
         with:
           name: bewcloud-sync-linux-${{ github.sha }}-unsigned.AppImage
-          path: src-tauri/target/debug/bundle/appimage/*.AppImage
+          path: src-tauri/target/release/bundle/appimage/*.AppImage
           if-no-files-found: error
       
       - name: Archive deb
@@ -75,7 +74,7 @@ jobs:
         if: matrix.config.os == 'ubuntu-latest'
         with:
           name: bewcloud-sync-linux-${{ github.sha }}-unsigned.deb
-          path: src-tauri/target/debug/bundle/deb/*.deb
+          path: src-tauri/target/release/bundle/deb/*.deb
           if-no-files-found: error
       
       - name: Archive dmg
@@ -83,7 +82,7 @@ jobs:
         if: matrix.config.os == 'macos-latest'
         with:
           name: bewcloud-sync-macos-${{ matrix.config.arch }}-${{ github.sha }}-unsigned.dmg
-          path: src-tauri/target/debug/bundle/dmg/*.dmg
+          path: src-tauri/target/release/bundle/dmg/*.dmg
           if-no-files-found: error
       
       - name: Archive app
@@ -91,7 +90,7 @@ jobs:
         if: matrix.config.os == 'macos-latest'
         with:
           name: bewcloud-sync-macos-${{ matrix.config.arch }}-${{ github.sha }}-unsigned.app
-          path: src-tauri/target/debug/bundle/macos/*.app
+          path: src-tauri/target/release/bundle/macos/*.app
           if-no-files-found: error
       
       - name: Archive msi
@@ -99,5 +98,13 @@ jobs:
         if: matrix.config.os == 'windows-latest'
         with:
           name: bewcloud-sync-windows-${{ github.sha }}-unsigned.msi
-          path: src-tauri/target/debug/bundle/msi/*.msi
+          path: src-tauri/target/release/bundle/msi/*.msi
+          if-no-files-found: error
+      
+      - name: Archive exe
+        uses: actions/upload-artifact@v4
+        if: matrix.config.os == 'windows-latest'
+        with:
+          name: bewcloud-sync-windows-${{ github.sha }}-unsigned.exe
+          path: src-tauri/target/release/bundle/nsis/*.exe
           if-no-files-found: error
