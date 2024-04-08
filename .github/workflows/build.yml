@@ -65,7 +65,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: matrix.config.os == 'ubuntu-latest'
         with:
-          name: bewcloud-sync-linux-${{ github.sha }}-unsigned.AppImage
+          name: bewcloud-sync-linux-${{ matrix.config.arch }-${{ github.sha }}-unsigned.AppImage
           path: src-tauri/target/release/bundle/appimage/*.AppImage
           if-no-files-found: error
       
@@ -73,7 +73,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: matrix.config.os == 'ubuntu-latest'
         with:
-          name: bewcloud-sync-linux-${{ github.sha }}-unsigned.deb
+          name: bewcloud-sync-linux-${{ matrix.config.arch }-${{ github.sha }}-unsigned.deb
           path: src-tauri/target/release/bundle/deb/*.deb
           if-no-files-found: error
       
