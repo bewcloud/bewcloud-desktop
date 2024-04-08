@@ -44,6 +44,7 @@ $ make build # builds the app binaries!
 
 ## TODOs:
 
+- [ ] Build binaries for Arch and RPM too (https://github.com/0-don/clippy/blob/master/.github/workflows/release.yml)
 - [ ] Create release with signed builds on tag push
 - [ ] Actually check and delete local directory's remote directories when they're removed
 - [ ] Actually delete local directory when a remote is removed (code is commented)
