@@ -47,11 +47,11 @@ jobs:
         with:
           key: ${{ matrix.config.rust_target }}
       
-      - name: Install webkit2gtk (ubuntu only)
+      - name: Install linux dependencies (ubuntu only)
         if: matrix.config.os == 'ubuntu-latest'
         run: |
           sudo apt update
-          sudo apt-get install -y libwebkit2gtk-4.0-dev
+          sudo apt-get install -y libwebkit2gtk-4.0-dev build-essential curl wget file libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
       
       - name: Install dependencies
         run: |
