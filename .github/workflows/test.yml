@@ -1,0 +1,30 @@
+name: Run Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+      
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ~/.nvm
+            node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      
+      - name: Install dependencies
+        run: |
+          npm i -g npm@10.1.0
+          make install
+      
+      - name: Run tests
+        run: make test

@@ -1,0 +1,43 @@
+{
+  "name": "bewcloud-sync",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "format": "biome format --write . && biome check --apply . && cd src-tauri && cargo fmt",
+    "lint": "biome check .",
+    "test": "npm run lint"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "1.5.3",
+    "preact": "10.20.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.6.4",
+    "@preact/preset-vite": "2.8.2",
+    "@tauri-apps/cli": "1.5.11",
+    "autoprefixer": "10.4.19",
+    "postcss": "8.4.38",
+    "tailwindcss": "3.4.3",
+    "typescript": "5.4.4",
+    "vite": "5.2.8"
+  },
+  "engines": {
+    "node": "20.x",
+    "npm": "10.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bewcloud/bewcloud-desktop.git"
+  },
+  "author": "Bruno Bernardino <me@brunobernardino.com>",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/bewcloud/bewcloud-desktop/issues"
+  },
+  "homepage": "https://github.com/bewcloud/bewcloud-desktop#readme"
+}
