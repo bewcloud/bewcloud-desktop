@@ -305,7 +305,7 @@ function App() {
                 placeholder="jane.doe@example.com"
                 autocorrect="off"
                 autocapitalize="off"
-                spellcheck="false"
+                spellcheck={false}
                 onInput={(event) =>
                   setNewAccountUsername(event.currentTarget.value)
                 }
@@ -340,7 +340,7 @@ function App() {
                 placeholder="bewcloud"
                 autocorrect="off"
                 autocapitalize="off"
-                spellcheck="false"
+                spellcheck={false}
                 onInput={(event) =>
                   setNewAccountName(event.currentTarget.value)
                 }

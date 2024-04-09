@@ -10,7 +10,7 @@
     "tauri": "tauri",
     "format": "biome format --write . && biome check --apply . && cd src-tauri && cargo fmt",
     "lint": "biome check .",
-    "test": "npm run lint"
+    "test": "npm run lint && tsc --noEmit"
   },
   "dependencies": {
     "@tauri-apps/api": "1.5.3",
