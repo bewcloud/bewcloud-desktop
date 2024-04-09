@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "bewCloud Desktop Sync",
-    "version": "0.0.1"
+    "version": "0.0.2"
   },
   "tauri": {
     "allowlist": {
@@ -66,11 +66,13 @@
         "icons/128x128@2x.png",
         "icons/icon.icns",
         "icons/icon.ico"
-      ]
+      ],
+      "category": "Utility"
     },
     "systemTray": {
       "iconPath": "icons/sync-unset.png",
-      "iconAsTemplate": true
+      "iconAsTemplate": true,
+      "title": "bewCloud Desktop Sync"
     }
   }
 }

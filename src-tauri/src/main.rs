@@ -230,6 +230,10 @@ fn check_if_local_directory_is_empty(directory: String) -> bool {
 fn get_config_file_path(app: &AppHandle) -> String {
     let binding = app.path_resolver().app_data_dir().unwrap();
     let app_data_dir = binding.to_str().unwrap();
+
+    // Make sure the app data dir exists
+    fs::create_dir_all(&app_data_dir).unwrap();
+
     let config_file_name = "config.json";
     let config_path_binding = Path::new(app_data_dir).join(config_file_name);
     let config_path = config_path_binding.to_str().unwrap();

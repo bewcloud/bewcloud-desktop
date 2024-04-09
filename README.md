@@ -38,6 +38,9 @@ $ make test # runs tests
 
 Don't forget to check the [development](#development) section above first!
 
+> [!NOTE]
+> If you're releasing a new version, update it in `src-tauri/tauri.conf.json`, `src-tauri/Cargo.toml`, and `package.json` first.
+
 ```sh
 $ make build # builds the app binaries!
 ```
