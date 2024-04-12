@@ -6,9 +6,9 @@ This is the Desktop Sync client for [bewCloud](https://github.com/bewcloud/bewcl
 
 Usernames, passwords, and sync is all handled by `rclone`. The connection to a bewCloud instance happens via HTTP and a remote via WebDav is created in `rclone`.
 
-The app runs `rclone bisync` every minute, or when it's forced to do so.
+The app runs `rclone bisync` every five minutes, or when it's forced to do so.
 
-If you're looking for the mobile app, it's not built yet.
+If you're looking for the mobile app, it's at [`bewcloud-mobile`](https://github.com/bewcloud/bewcloud-mobile).
 
 ## Install
 

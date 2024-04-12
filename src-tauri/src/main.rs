@@ -69,7 +69,7 @@ fn run_sync(app: AppHandle) {
         return;
     }
 
-    let one_minute = time::Duration::from_secs(60);
+    let five_minutes = time::Duration::from_secs(300);
 
     tauri::async_runtime::spawn(async move {
         loop {
@@ -90,7 +90,7 @@ fn run_sync(app: AppHandle) {
                 ))
                 .unwrap();
 
-            thread::sleep(one_minute);
+            thread::sleep(five_minutes);
         }
     });
 }
