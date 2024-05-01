@@ -512,6 +512,13 @@ fn main() {
             // Keeps app running when regularly "closed"
             tauri::RunEvent::ExitRequested { api, .. } => {
                 api.prevent_exit();
+
+                use cocoa::appkit::{NSApp, NSApplication, NSApplicationActivationPolicy::*};
+
+                unsafe {
+                    let app = NSApp();
+                    app.setActivationPolicy_(NSApplicationActivationPolicyAccessory);
+                }
             }
 
             _ => {}
