@@ -458,6 +458,21 @@ fn show_or_hide_main_window(app: &AppHandle) {
         .unwrap();
 }
 
+#[cfg(target_os = "macos")]
+fn hide_dock_icon() {
+    use cocoa::appkit::{NSApp, NSApplication, NSApplicationActivationPolicy::*};
+
+    unsafe {
+        let app = NSApp();
+        app.setActivationPolicy_(NSApplicationActivationPolicyAccessory);
+    }
+}
+
+#[cfg(not(target_os = "macos"))]
+fn hide_dock_icon() {
+    // Do nothing
+}
+
 fn main() {
     let show_or_hide = CustomMenuItem::new("show_or_hide".to_string(), "Hide");
     let force_sync = CustomMenuItem::new("force_sync".to_string(), "Force Sync");
@@ -513,12 +528,7 @@ fn main() {
             tauri::RunEvent::ExitRequested { api, .. } => {
                 api.prevent_exit();
 
-                use cocoa::appkit::{NSApp, NSApplication, NSApplicationActivationPolicy::*};
-
-                unsafe {
-                    let app = NSApp();
-                    app.setActivationPolicy_(NSApplicationActivationPolicyAccessory);
-                }
+                hide_dock_icon();
             }
 
             _ => {}
