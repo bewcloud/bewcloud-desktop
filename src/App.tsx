@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'preact/hooks';
-import { invoke } from '@tauri-apps/api/tauri';
+import { invoke } from '@tauri-apps/api/core';
 import { appDataDir, homeDir, join } from '@tauri-apps/api/path';
-import { readTextFile } from '@tauri-apps/api/fs';
-import { open } from '@tauri-apps/api/dialog';
+import { readTextFile } from '@tauri-apps/plugin-fs';
+import { open } from '@tauri-apps/plugin-dialog';
 
 import type { Config, Directory, NewRCloneRemote } from './types.ts';
 import { fetchRemoteDirectories } from './utils.ts';
@@ -195,8 +195,8 @@ function App() {
 
   return (
     <main>
-      <section class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
-        <header class="px-4 pt-8 pb-2 max-w-screen-md mx-auto flex flex-col items-center justify-center">
+      <section class="max-w-(--breakpoint-md) mx-auto flex flex-col items-center justify-center">
+        <header class="px-4 pt-8 pb-2 max-w-(--breakpoint-md) mx-auto flex flex-col items-center justify-center">
           <a
             href="https://bewcloud.com"
             target="_blank"
@@ -233,7 +233,7 @@ function App() {
                       >
                         {account.rclone.remote_name}
                       </button>{' '}
-                      // Last sync:{' '}
+                      {'// '}Last sync:{' '}
                       <time dateTime={account.last_sync_time}>
                         {timeFormat.format(new Date(account.last_sync_time))}
                       </time>

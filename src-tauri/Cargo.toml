@@ -1,6 +1,6 @@
 [package]
 name = "bewcloud-sync"
-version = "0.0.5"
+version = "0.0.6"
 description = "Desktop Sync Client for bewCloud"
 authors = ["Bruno Bernardino"]
 edition = "2021"
@@ -8,17 +8,21 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1", features = [] }
+tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [ "http-request", "fs-read-dir", "dialog-confirm", "dialog-ask", "path-all", "fs-read-file", "fs-write-file", "fs-exists", "shell-execute", "dialog-open", "dialog-message", "system-tray", "shell-open", "icon-png"] }
+tauri = { version = "2", features = ["image-png", "tray-icon"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-async-std = "1.12.0"
-chrono = "0.4.19"
+async-std = "1.13.2"
+chrono = "0.4.42"
+tauri-plugin-fs = "2"
+tauri-plugin-shell = "2"
+tauri-plugin-http = "2"
+tauri-plugin-dialog = "2"
 
 [target.'cfg(target_os = "macos")'.dependencies]
-cocoa = "0.25.0"
+cocoa = "0.26.1"
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!

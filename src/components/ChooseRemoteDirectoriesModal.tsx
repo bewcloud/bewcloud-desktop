@@ -49,7 +49,8 @@ export default function ChooseRemoteDirectoriesModal({
           <ol class="mt-2">
             {directories.map((directory) => (
               <li class="mb-1">
-                <span
+                <button
+                  type="button"
                   class="block px-2 py-2 hover:no-underline hover:opacity-60 bg-slate-700 cursor-pointer rounded-md"
                   onClick={() =>
                     toggleChosenDirectory(`${directory.directory_name}`)
@@ -71,7 +72,7 @@ export default function ChooseRemoteDirectoriesModal({
                       />
                     ) : null}
                   </p>
-                </span>
+                </button>
               </li>
             ))}
           </ol>

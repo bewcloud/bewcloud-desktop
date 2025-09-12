@@ -1,33 +1,36 @@
 {
   "name": "bewcloud-sync",
   "private": true,
-  "version": "0.0.4",
+  "version": "0.0.6",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "format": "biome format --write . && biome check --apply . && cd src-tauri && cargo fmt",
+    "format": "biome format --write . && biome check --write . && cd src-tauri && cargo fmt",
     "lint": "biome check .",
     "test": "npm run lint && tsc --noEmit"
   },
   "dependencies": {
-    "@tauri-apps/api": "1.5.3",
-    "preact": "10.20.1"
+    "@tauri-apps/api": "2.8.0",
+    "@tauri-apps/plugin-dialog": "2.4.0",
+    "@tauri-apps/plugin-fs": "2.4.2",
+    "@tauri-apps/plugin-http": "2.5.2",
+    "@tauri-apps/plugin-shell": "2.3.1",
+    "preact": "10.27.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.6.4",
-    "@preact/preset-vite": "2.8.2",
-    "@tauri-apps/cli": "1.5.11",
-    "autoprefixer": "10.4.19",
-    "postcss": "8.4.38",
-    "tailwindcss": "3.4.3",
-    "typescript": "5.4.4",
-    "vite": "5.2.8"
+    "@biomejs/biome": "2.2.3",
+    "@preact/preset-vite": "2.10.2",
+    "@tailwindcss/vite": "4.1.13",
+    "@tauri-apps/cli": "2.8.4",
+    "tailwindcss": "4.1.13",
+    "typescript": "5.9.2",
+    "vite": "7.1.5"
   },
   "engines": {
-    "node": "20.x",
+    "node": "22.x",
     "npm": "10.x"
   },
   "repository": {

@@ -11,8 +11,7 @@ use std::{
     time::{self, SystemTime},
 };
 use tauri::{
-    AppHandle, CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu,
-    SystemTrayMenuItem,
+    AppHandle, menu::{MenuBuilder, MenuItem}, Manager, tray::TrayIconBuilder, image::Image,
 };
 
 #[derive(Serialize, Deserialize, Clone)]
@@ -52,19 +51,21 @@ struct UpdatedRCloneRemote {
 
 #[tauri::command]
 fn run_sync(app: AppHandle) {
-    app.tray_handle()
-        .set_icon(tauri::Icon::Raw(
-            include_bytes!("../icons/sync-running.png").to_vec(),
+    TrayIconBuilder::with_id("tray")
+        .icon(Image::from_bytes(
+            include_bytes!("../icons/sync-running.png"),
         ))
+        .build(&app)
         .unwrap();
 
     let config = get_json_config(&app);
 
     if config.accounts.len() == 0 {
-        app.tray_handle()
-            .set_icon(tauri::Icon::Raw(
-                include_bytes!("../icons/sync-unset.png").to_vec(),
+        TrayIconBuilder::with_id("tray")
+            .icon(Image::from_bytes(
+                include_bytes!("../icons/sync-unset.png"),
             ))
+            .build(&app)
             .unwrap();
         return;
     }
@@ -73,10 +74,11 @@ fn run_sync(app: AppHandle) {
 
     tauri::async_runtime::spawn(async move {
         loop {
-            app.tray_handle()
-                .set_icon(tauri::Icon::Raw(
-                    include_bytes!("../icons/sync-running.png").to_vec(),
+            TrayIconBuilder::with_id("tray")
+                .icon(Image::from_bytes(
+                    include_bytes!("../icons/sync-running.png"),
                 ))
+                .build(&app)
                 .unwrap();
 
             for account in &config.accounts {
@@ -84,10 +86,11 @@ fn run_sync(app: AppHandle) {
                 update_sync_time_in_json_config(&app, &account);
             }
 
-            app.tray_handle()
-                .set_icon(tauri::Icon::Raw(
-                    include_bytes!("../icons/sync-done.png").to_vec(),
+            TrayIconBuilder::with_id("tray")
+                .icon(Image::from_bytes(
+                    include_bytes!("../icons/sync-done.png"),
                 ))
+                .build(&app)
                 .unwrap();
 
             thread::sleep(five_minutes);
@@ -474,18 +477,26 @@ fn hide_dock_icon() {
 }
 
 fn main() {
-    let show_or_hide = CustomMenuItem::new("show_or_hide".to_string(), "Hide");
-    let force_sync = CustomMenuItem::new("force_sync".to_string(), "Force Sync");
-    let quit = CustomMenuItem::new("quit".to_string(), "Quit");
-    let tray_menu = SystemTrayMenu::new()
+    let show_or_hide = MenuItem::new("show_or_hide".to_string(), "Hide");
+    let force_sync = MenuItem::new("force_sync".to_string(), "Force Sync");
+    let quit = MenuItem::new("quit".to_string(), "Quit");
+    let tray_menu = MenuItem::new()
         .add_item(show_or_hide)
         .add_item(force_sync)
-        .add_native_item(SystemTrayMenuItem::Separator)
+        .add_native_item(MenuItem::Separator)
         .add_item(quit);
     let system_tray = SystemTray::new().with_menu(tray_menu);
 
     tauri::Builder::default()
-        .system_tray(system_tray)
+        .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_http::init())
+        .plugin(tauri_plugin_shell::init())
+        .plugin(tauri_plugin_fs::init())
+        .setup(|app| {
+            init(app.app_handle());
+            enable_tray(app); // Register tray events
+            Ok(())
+        })
         .on_system_tray_event(|app, event| match event {
             SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
                 "show_or_hide" => {

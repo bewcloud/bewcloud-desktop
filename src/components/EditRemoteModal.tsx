@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'preact/hooks';
-import { invoke } from '@tauri-apps/api/tauri';
+import { invoke } from '@tauri-apps/api/core';
 import { homeDir } from '@tauri-apps/api/path';
-import { open } from '@tauri-apps/api/dialog';
+import { open } from '@tauri-apps/plugin-dialog';
 
 import type { Config, Directory, NewRCloneRemote } from '../types.ts';
 import { fetchRemoteDirectories } from '../utils.ts';
